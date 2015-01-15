@@ -12,7 +12,7 @@ Welcome to HDBC, the Haskell Database Connectivity library.
 Written by John Goerzen, jgoerzen\@complete.org
 -}
 
-module Database.HDBC 
+module Database.HDBC
     (-- * Introduction
      -- $introduction
 
@@ -24,7 +24,7 @@ module Database.HDBC
 
      -- * Typing of transfer data
      SqlValue(..),
-     toSql, fromSql, safeFromSql, nToSql, iToSql, posixToSql, 
+     toSql, fromSql, safeFromSql, nToSql, iToSql, posixToSql,
 
      -- * Database Connections
      IConnection,
@@ -48,14 +48,14 @@ module Database.HDBC
      -- ** Execution
      execute, executeRaw, sExecute, executeMany, sExecuteMany,
      -- ** Fetching Results
-     fetchRow, fetchRowAL, fetchRowMap, sFetchRow, 
+     fetchRow, fetchRowAL, fetchRowMap, sFetchRow,
      fetchAllRows, fetchAllRows', fetchAllRowsAL, fetchAllRowsAL',
      fetchAllRowsMap, fetchAllRowsMap', sFetchAllRows, sFetchAllRows',
      getColumnNames,
      -- ** Statement Inquires
      describeResult,
      -- ** Miscellaneous
-     finish, originalQuery,
+     finish, finalize, originalQuery,
 
      -- * Exceptions
      SqlError(..),
@@ -140,7 +140,7 @@ Features of HDBC include:
 Here is a list of known drivers as of January 26, 2009:
 
 [@Sqlite v3@] Available from <http://software.complete.org/hdbc-sqlite3>.  Or, to
-participate in development, use 
+participate in development, use
 @git clone <git://git.complete.org/hdbc-sqlite3>@
 
 [@PostgreSQL@] Available from <http://software.complete.org/hdbc-postgresql>.  Or, to
@@ -230,7 +230,7 @@ However, there are some caveats to the above:
 
  * Not all databases may support the level of multithreading described above.
    For those that don't, safe access will be restriced in the HDBC driver
-   by using locks.  Therefore, you can write portable code, but you 
+   by using locks.  Therefore, you can write portable code, but you
    only get real multithreading when databases really support it.
    Details of thread support should be documented in the HDBC
    driver for each specific database.

@@ -40,8 +40,8 @@ data Statement = Statement
         certainly fail; use 'execute' instead. -}
      executeRaw :: IO (),
 
-     {- | Execute the query with many rows. 
-        The return value is the return value from the final row 
+     {- | Execute the query with many rows.
+        The return value is the return value from the final row
         as if you had called 'execute' on it.
 
         Due to optimizations that are possible due to different
@@ -51,9 +51,17 @@ data Statement = Statement
 
         This is most useful for non-SELECT statements. -}
      executeMany :: [[SqlValue]] -> IO (),
-                 
-     {- | Abort a query in progress -- usually not needed. -}
+
+     {- | Abort a query in progress -- usually not needed. This allows
+        executing the query once again later with a different parameter set -}
      finish :: IO (),
+
+     {- | Finalizes the statement and immediately frees up any associated resources.
+          Doing anything with a finalized statement will break your program.
+
+          This is mainly intended for optimization to avoid waiting for GC to invoke
+          finalizer on the statement. -}
+     finalize :: IO (),
 
      {- | Fetches one row from the DB.  Returns 'Nothing' if there
         are no more rows.  Will automatically call 'finish' when
@@ -64,7 +72,7 @@ data Statement = Statement
         For maximum portability, you should not assume that
         information is available until after an 'execute' function
         has been run.
-        
+
         Information is returned here directly as returned
         by the underlying database layer.  Note that different
         databases have different rules about capitalization
